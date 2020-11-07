@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public enum PlatformSide
 {
@@ -16,16 +17,25 @@ public class PlatformManager : MonoBehaviour
     float m_RightX;
     float m_LeftX;
     Camera m_Camera;
+    ObjectPool[] m_PlatformPool;
+    
     // Start is called before the first frame update
     void Start()
     {
-        CreatePlatforms();
 
+        m_PlatformPool = new ObjectPool[m_Platform.Length];
         m_Camera = Camera.main;
         m_LeftX = m_Camera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
         m_RightX = m_Camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
         Debug.Log(m_LeftX);
         Debug.Log(m_RightX);
+
+        for (int i = 0; i < m_Platform.Length; i++)
+        {
+            m_PlatformPool[i] = new ObjectPool(m_Platform[i], 20, true);
+        }
+
+        CreatePlatforms();
     }
 
     // Update is called once per frame
@@ -39,7 +49,8 @@ public class PlatformManager : MonoBehaviour
         Transform prevPlatform = m_FirstPlatform;
         for (int i = 0; i < 100; i++)
         {
-            GameObject go = Instantiate(m_Platform[(int)Random.Range(0,2)],this.transform);
+            GameObject go = m_PlatformPool[(int)Random.Range(0, 2)].Spawn();
+            go.transform.parent = this.transform;
             go.transform.position = GetNextPlatformPos(prevPlatform,go.transform);
             prevPlatform = go.transform;
         }

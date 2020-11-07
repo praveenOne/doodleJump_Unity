@@ -1,8 +1,16 @@
-﻿public class BreakingPlatform : Platform
+﻿using System.Collections;
+
+public class BreakingPlatform : Platform
 {
     public override int OnStep()
     {
-        Destroy(gameObject);
+        StartCoroutine(DestroyPlatform());
         return base.OnStep();
+    }
+
+    IEnumerator DestroyPlatform()
+    {
+        yield return null;
+        Destroy(gameObject);
     }
 }
