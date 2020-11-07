@@ -34,11 +34,12 @@ public class PlatformManager : MonoBehaviour
 
     void Start()
     {
-
-        m_PlatformPool = new ObjectPool[m_Platform.Length];
         m_Camera = Camera.main;
         m_LeftX = m_Camera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
         m_RightX = m_Camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
+
+        m_PlatformPool = new ObjectPool[m_Platform.Length];
+
         //Debug.Log(m_LeftX);
         //Debug.Log(m_RightX);
 
@@ -50,10 +51,14 @@ public class PlatformManager : MonoBehaviour
         CreatePlatforms();
     }
 
-    // Update is called once per frame
-    void Update()
+    public float GetLeftBoundry()
     {
-        
+        return m_LeftX;
+    }
+
+    public float GetRightBoundry()
+    {
+        return m_RightX;
     }
 
     void CreatePlatforms()
