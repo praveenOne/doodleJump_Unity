@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Util;
 
 public enum PlatformSide
@@ -12,14 +10,28 @@ public enum PlatformSide
 
 public class PlatformManager : MonoBehaviour
 {
+
     [SerializeField] GameObject[] m_Platform;
     [SerializeField] Transform m_FirstPlatform;
     float m_RightX;
     float m_LeftX;
     Camera m_Camera;
     ObjectPool[] m_PlatformPool;
-    
-    // Start is called before the first frame update
+
+    #region singleton stuff
+    private static PlatformManager m_Instance;
+
+    public static PlatformManager Instance
+    {
+        get { return m_Instance; }
+    }
+    #endregion
+
+    private void Awake()
+    {
+        m_Instance = this;
+    }
+
     void Start()
     {
 
@@ -34,7 +46,7 @@ public class PlatformManager : MonoBehaviour
         {
             m_PlatformPool[i] = new ObjectPool(m_Platform[i], 20, true);
         }
-
+        
         CreatePlatforms();
     }
 
@@ -99,5 +111,18 @@ public class PlatformManager : MonoBehaviour
             return PlatformSide.left;
         }
         
+    }
+
+    public void DestroyPlatform(PlatformType type, GameObject platrom)
+    {
+        switch (type)
+        {
+            case PlatformType.normal:
+                m_PlatformPool[0].Recycle(platrom);
+                break;
+            case PlatformType.rotted:
+                m_PlatformPool[1].Recycle(platrom);
+                break;
+        }
     }
 }

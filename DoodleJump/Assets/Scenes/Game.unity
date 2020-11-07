@@ -557,6 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BounceForce: 8
+  m_Type: 1
 --- !u!50 &1246622098
 Rigidbody2D:
   serializedVersion: 4
@@ -814,6 +815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BounceForce: 8
+  m_Type: 0
 --- !u!1 &2131704321
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,8 +846,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Platform:
-  - {fileID: 1246622096}
   - {fileID: 2056210034}
+  - {fileID: 1246622096}
   m_FirstPlatform: {fileID: 2056210038}
 --- !u!4 &2131704323
 Transform:

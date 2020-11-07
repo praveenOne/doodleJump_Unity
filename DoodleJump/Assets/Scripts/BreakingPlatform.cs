@@ -11,6 +11,6 @@ public class BreakingPlatform : Platform
     IEnumerator DestroyPlatform()
     {
         yield return null;
-        Destroy(gameObject);
+        PlatformManager.Instance.DestroyPlatform(m_Type, gameObject);
     }
 }
