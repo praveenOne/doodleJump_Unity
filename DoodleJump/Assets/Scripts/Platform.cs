@@ -6,7 +6,8 @@ public enum PlatformType
 {
     normal = 0,
     rotted = 1,
-    spring = 2
+    spring = 2,
+    moving = 3
 }
 
 public class Platform : MonoBehaviour
