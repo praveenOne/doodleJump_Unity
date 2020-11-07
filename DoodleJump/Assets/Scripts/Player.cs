@@ -31,8 +31,13 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision");
-        m_Rigitbody.velocity = Vector2.zero;
-        m_Rigitbody.AddForce(Vector2.up * 8, ForceMode2D.Impulse);
+        if(collision.gameObject.tag == "platform")
+        {
+            Debug.Log("Collision");
+            m_Rigitbody.velocity = Vector2.zero;
+            int forceVal = collision.gameObject.GetComponent<Platform>().OnStep();
+            m_Rigitbody.AddForce(Vector2.up * forceVal, ForceMode2D.Impulse);
+        }
+        
     }
 }

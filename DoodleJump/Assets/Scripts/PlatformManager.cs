@@ -11,7 +11,7 @@ public enum PlatformSide
 
 public class PlatformManager : MonoBehaviour
 {
-    [SerializeField] GameObject m_Platform;
+    [SerializeField] GameObject[] m_Platform;
     [SerializeField] Transform m_FirstPlatform;
     float m_RightX;
     float m_LeftX;
@@ -39,7 +39,7 @@ public class PlatformManager : MonoBehaviour
         Transform prevPlatform = m_FirstPlatform;
         for (int i = 0; i < 100; i++)
         {
-            GameObject go = Instantiate(m_Platform,this.transform);
+            GameObject go = Instantiate(m_Platform[(int)Random.Range(0,2)],this.transform);
             go.transform.position = GetNextPlatformPos(prevPlatform,go.transform);
             prevPlatform = go.transform;
         }
