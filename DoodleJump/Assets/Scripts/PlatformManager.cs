@@ -71,7 +71,7 @@ public class PlatformManager : MonoBehaviour
         IsCreatingPlatform = true;
         for (int i = 0; i < 100; i++)
         {
-            GameObject go = m_PlatformPool[(int)Random.Range(0, 2)].Spawn();
+            GameObject go = m_PlatformPool[(int)Random.Range(0, m_Platform.Length)].Spawn();
             go.transform.parent = this.transform;
             go.transform.position = GetNextPlatformPos(m_PreviousPlatform,go.transform);
             m_PreviousPlatform = go.transform;

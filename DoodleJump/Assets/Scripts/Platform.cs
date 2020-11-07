@@ -5,7 +5,8 @@ using UnityEngine;
 public enum PlatformType
 {
     normal = 0,
-    rotted = 1
+    rotted = 1,
+    spring = 2
 }
 
 public class Platform : MonoBehaviour
