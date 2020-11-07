@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     float m_LeftX;
     float m_RightX;
     float m_DeadY;
+    float m_Height;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
         m_RightX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
 
         m_DeadY = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y;
+        m_Height = gameObject.GetComponent<SpriteRenderer>().bounds.size.y;
     }
 
     // Update is called once per frame
@@ -37,11 +39,12 @@ public class Player : MonoBehaviour
             m_BoxCollider.enabled = true;
         }
 
-        if(Camera.main.WorldToScreenPoint(gameObject.transform.position).y < 0.5)
+        if(Camera.main.WorldToScreenPoint(gameObject.transform.position).y < - m_Height)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
         }
     }
+
 
     private void FixedUpdate()
     {
@@ -59,7 +62,6 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.tag == "platform")
         {
-            Debug.Log("Collision");
             m_Rigitbody.velocity = Vector2.zero;
             int forceVal = collision.gameObject.GetComponent<Platform>().OnStep();
             m_Rigitbody.AddForce(Vector2.up * forceVal, ForceMode2D.Impulse);

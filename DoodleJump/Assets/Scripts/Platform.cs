@@ -22,4 +22,17 @@ public class Platform : MonoBehaviour
     {
         return m_BounceForce;
     }
+
+    public virtual void Update()
+    {
+        if (PlatformManager.Instance.IsPlatformDissapear(gameObject.transform))
+        {
+            Recycle();
+        }
+    }
+
+    public void Recycle()
+    {
+        PlatformManager.Instance.DestroyPlatform(m_Type, gameObject);
+    }
 }

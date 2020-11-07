@@ -15,8 +15,10 @@ public class PlatformManager : MonoBehaviour
     [SerializeField] Transform m_FirstPlatform;
     float m_RightX;
     float m_LeftX;
+    bool IsCreatingPlatform;
     Camera m_Camera;
     ObjectPool[] m_PlatformPool;
+    Transform m_PreviousPlatform;
 
     #region singleton stuff
     private static PlatformManager m_Instance;
@@ -39,7 +41,7 @@ public class PlatformManager : MonoBehaviour
         m_RightX = m_Camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
 
         m_PlatformPool = new ObjectPool[m_Platform.Length];
-
+        m_PreviousPlatform = m_FirstPlatform;
         //Debug.Log(m_LeftX);
         //Debug.Log(m_RightX);
 
@@ -63,21 +65,24 @@ public class PlatformManager : MonoBehaviour
 
     void CreatePlatforms()
     {
-        Transform prevPlatform = m_FirstPlatform;
+        if (IsCreatingPlatform)
+            return;
+
+        IsCreatingPlatform = true;
         for (int i = 0; i < 100; i++)
         {
             GameObject go = m_PlatformPool[(int)Random.Range(0, 2)].Spawn();
             go.transform.parent = this.transform;
-            go.transform.position = GetNextPlatformPos(prevPlatform,go.transform);
-            prevPlatform = go.transform;
+            go.transform.position = GetNextPlatformPos(m_PreviousPlatform,go.transform);
+            m_PreviousPlatform = go.transform;
         }
+        IsCreatingPlatform = false;
     }
 
-    //Vector3 GetNextPosition(Vector3 prevPos)
-    //{
-    //    Vector3 pos = new Vector3(Random.Range(-2.8f,2.8f), prevPos.y + 3, prevPos.z);
-    //    return pos;
-    //}
+    public bool IsPlatformDissapear(Transform platrom)
+    {
+        return m_Camera.WorldToScreenPoint(platrom.position).y < -100;
+    }
 
     Vector3 GetNextPlatformPos(Transform prevPlatform, Transform currPlatform)
     {
@@ -86,13 +91,13 @@ public class PlatformManager : MonoBehaviour
         switch (sideTiSpawn)
         {
             case PlatformSide.right:
-                pos = new Vector3(Random.Range(prevPlatform.position.x, 2.8f), prevPlatform.position.y + 2, 0);
+                pos = new Vector3(Random.Range(prevPlatform.position.x, m_RightX), prevPlatform.position.y + 2, 0);
                 break;
             case PlatformSide.left:
-                pos = new Vector3(Random.Range( -2.8f, prevPlatform.position.x), prevPlatform.position.y + 2, 0);
+                pos = new Vector3(Random.Range(m_LeftX, prevPlatform.position.x), prevPlatform.position.y + 2, 0);
                 break;
             case PlatformSide.either:
-                pos = new Vector3(Random.Range(-2.8f, 2.8f), prevPlatform.position.y + 2, 0);
+                pos = new Vector3(Random.Range(m_LeftX, m_RightX), prevPlatform.position.y + 2, 0);
                 break;
         }
         return pos;
@@ -121,5 +126,13 @@ public class PlatformManager : MonoBehaviour
     public void DestroyPlatform(PlatformType type, GameObject platrom)
     {
         m_PlatformPool[(int)type].Recycle(platrom);
+    }
+
+    private void Update()
+    {
+        if(m_Camera.WorldToScreenPoint(m_PreviousPlatform.position).y < Screen.height + 200)
+        {
+            CreatePlatforms();
+        }
     }
 }

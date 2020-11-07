@@ -11,6 +11,6 @@ public class RottedPlatform : Platform
     IEnumerator DestroyPlatform()
     {
         yield return null;
-        PlatformManager.Instance.DestroyPlatform(m_Type, gameObject);
+        Recycle();
     }
 }
