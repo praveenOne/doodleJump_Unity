@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 1246622098}
   - component: {fileID: 1246622097}
   m_Layer: 0
-  m_Name: BreakingPlatform
+  m_Name: RottedPlatform
   m_TagString: platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

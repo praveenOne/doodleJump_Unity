@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-public class BreakingPlatform : Platform
+public class RottedPlatform : Platform
 {
     public override int OnStep()
     {

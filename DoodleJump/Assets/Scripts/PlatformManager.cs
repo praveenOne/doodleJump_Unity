@@ -39,8 +39,8 @@ public class PlatformManager : MonoBehaviour
         m_Camera = Camera.main;
         m_LeftX = m_Camera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
         m_RightX = m_Camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
-        Debug.Log(m_LeftX);
-        Debug.Log(m_RightX);
+        //Debug.Log(m_LeftX);
+        //Debug.Log(m_RightX);
 
         for (int i = 0; i < m_Platform.Length; i++)
         {
@@ -115,14 +115,6 @@ public class PlatformManager : MonoBehaviour
 
     public void DestroyPlatform(PlatformType type, GameObject platrom)
     {
-        switch (type)
-        {
-            case PlatformType.normal:
-                m_PlatformPool[0].Recycle(platrom);
-                break;
-            case PlatformType.rotted:
-                m_PlatformPool[1].Recycle(platrom);
-                break;
-        }
+        m_PlatformPool[(int)type].Recycle(platrom);
     }
 }
