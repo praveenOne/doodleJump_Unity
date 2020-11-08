@@ -36,6 +36,6 @@ public class Menu : MonoBehaviour
 
     public void OnClickPlayButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        GameManager.Instance.ChangeScene(GameScenes.Game);
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
@@ -17,6 +18,7 @@ public class HUD : MonoBehaviour
     [SerializeField] Text m_Score;
     [SerializeField] GameObject m_HighScore;
     [SerializeField] CountdownAnimation m_Countdown;
+    [SerializeField] CinemachineVirtualCamera m_CinemachineCam;
 
     private void Awake()
     {
@@ -56,6 +58,11 @@ public class HUD : MonoBehaviour
     public void StartCountdown(System.Action callback)
     {
         m_Countdown.StartCountdown(callback);
+    }
+
+    public void SetCamTarget(Transform player)
+    {
+        m_CinemachineCam.Follow = player;
     }
    
 }

@@ -1,13 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public enum SaveKeys
 {
     highScore,
     lives,
     coins
+}
+
+public enum GameScenes
+{
+    Menu,
+    Game
 }
 
 public class GameManager : MonoBehaviour
@@ -22,13 +29,14 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] GameObject m_Player;
+    [SerializeField] GameObject m_PlayerPrefab;
 
     int m_Lives;
     int m_Coins;
     int m_HighScore;
     int m_Score;
     int m_LifeCost;
+    Player m_Player;
 
     private void Awake()
     {
@@ -46,6 +54,32 @@ public class GameManager : MonoBehaviour
         Init();
     }
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Enum.TryParse(scene.name, out GameScenes thisScene);
+
+        switch (thisScene)
+        {
+            case GameScenes.Game:
+                // start countdown and game
+                HUD.Instance.StartCountdown(StartGame);
+                break;
+            case GameScenes.Menu:
+                break;
+        }
+
+    }
+
 
     void Init()
     {
@@ -60,10 +94,9 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         m_Score = 0;
-        HUD.Instance.StartCountdown(() =>
-        {
-            Debug.Log("Countdown Finished");
-        });
+        GameObject player = Instantiate(m_PlayerPrefab);
+        m_Player = player.GetComponent<Player>();
+        HUD.Instance.SetCamTarget(player.transform);
     }
 
     public void PurchaseLifes(System.Action callback)
@@ -93,6 +126,11 @@ public class GameManager : MonoBehaviour
     {
         m_Score += 1;
         HUD.Instance.SetScore(m_Score);
+    }
+
+    public void ChangeScene(GameScenes scene)
+    {
+        SceneManager.LoadScene(scene.ToString());
     }
 
 }

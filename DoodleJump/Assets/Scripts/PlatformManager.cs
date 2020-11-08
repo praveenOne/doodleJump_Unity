@@ -49,7 +49,6 @@ public class PlatformManager : MonoBehaviour
         }
         
         CreatePlatforms();
-        GameManager.Instance.StartGame();
     }
 
     public float GetLeftBoundry()
