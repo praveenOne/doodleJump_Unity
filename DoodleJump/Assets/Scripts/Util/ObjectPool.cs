@@ -49,7 +49,7 @@ namespace Util
         /// <param name='onDeactivate'>
         /// Delegate to call when object is recycled
         /// </param>
-        public ObjectPool(GameObject prefab, int initialSize, bool setActiveRecursively, ActivateDelegate onActivate = null, DeactivateDelegate onDeactivate = null)
+        public ObjectPool(GameObject prefab, int initialSize, bool setActiveRecursively, Transform parent, ActivateDelegate onActivate = null, DeactivateDelegate onDeactivate = null)
         {
             m_Prefab = prefab;
             m_SetActiveRecursively = setActiveRecursively;
@@ -61,6 +61,7 @@ namespace Util
             for (int i = 0; i < initialSize; ++i)
             {
                 GameObject gameObject = GameObject.Instantiate(m_Prefab) as GameObject;
+                gameObject.transform.SetParent(parent);
                 m_PoolAvailable.Add(gameObject);
                 SetActive(gameObject, false);
             }

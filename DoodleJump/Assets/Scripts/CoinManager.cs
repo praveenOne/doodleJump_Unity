@@ -35,7 +35,7 @@ public class CoinManager : MonoBehaviour
         m_StartY = m_Camera.ScreenToWorldPoint(new Vector3(0, 0, 0)).y;
         m_RightX = m_Camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
 
-        m_CoinPool = new ObjectPool(m_Coin, 20, true);
+        m_CoinPool = new ObjectPool(m_Coin, 20, true, transform);
 
         for (int i = 0; i < 20; i++)
         {
@@ -53,6 +53,7 @@ public class CoinManager : MonoBehaviour
     void SpawnCoin()
     {
         GameObject coin = m_CoinPool.Spawn();
+        coin.transform.parent = transform;
         coin.transform.position = new Vector3(Random.Range(m_LeftX, m_RightX), Random.Range(m_StartY, m_StartY + 50), 0);
         m_StartY = coin.transform.position.y;
     }

@@ -43,7 +43,7 @@ public class PlatformManager : MonoBehaviour
 
         for (int i = 0; i < m_Platform.Length; i++)
         {
-            m_PlatformPool[i] = new ObjectPool(m_Platform[i], 20, true);
+            m_PlatformPool[i] = new ObjectPool(m_Platform[i], 20, true, transform);
         }
 
         GameObject firstPt = m_PlatformPool[0].Spawn();
@@ -67,7 +67,7 @@ public class PlatformManager : MonoBehaviour
     void CreatePlatforms()
     {
         GameObject go = m_PlatformPool[Random.Range(0, m_Platform.Length)].Spawn();
-        go.transform.parent = this.transform;
+        go.transform.SetParent(transform);
         go.transform.position = GetNextPlatformPos(m_PreviousPlatform, go.transform);
         m_PreviousPlatform = go.transform;
     }
