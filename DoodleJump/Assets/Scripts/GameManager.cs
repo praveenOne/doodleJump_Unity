@@ -124,6 +124,12 @@ public class GameManager : MonoBehaviour
         SaveData();
     }
 
+    public void GetCoin()
+    {
+        m_Coins += 1;
+        HUD.Instance.SetCoinCount(m_Coins);
+    }
+
     private void SpendLife()
     {
         m_Lives -= 1;
@@ -170,6 +176,11 @@ public class GameManager : MonoBehaviour
         return m_Coins;
     }
 
+    public int GetHighScore()
+    {
+        return m_HighScore;
+    }
+
     public bool CanPurchaseLifes()
     {
         if (m_Lives > 2)
@@ -193,6 +204,7 @@ public class GameManager : MonoBehaviour
         if(m_Score > m_HighScore)
         {
             StartCoroutine(HUD.Instance.DisplayHighScore());
+            m_HighScore = m_Score;
         }
     }
 

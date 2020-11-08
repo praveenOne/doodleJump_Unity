@@ -24,9 +24,8 @@ public class Menu : MonoBehaviour
 
     void PaintMenu()
     {
-        int lives = GameManager.Instance.GetLifeCount();
-        Debug.Log(lives);
-        m_lifeMeeter.SetCount(lives);
+        m_HighScore.text = GameManager.Instance.GetHighScore().ToString();
+        m_lifeMeeter.SetCount(GameManager.Instance.GetLifeCount());
 
         if (!GameManager.Instance.CanPurchaseLifes())
         {

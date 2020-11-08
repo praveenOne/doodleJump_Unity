@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             int forceVal = collision.gameObject.GetComponent<Platform>().OnStep(gameObject);
             m_Rigitbody.AddForce(Vector2.up * forceVal, ForceMode2D.Impulse);
         }
-        
+
     }
 
 
