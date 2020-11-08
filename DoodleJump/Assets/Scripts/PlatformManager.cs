@@ -42,8 +42,6 @@ public class PlatformManager : MonoBehaviour
 
         m_PlatformPool = new ObjectPool[m_Platform.Length];
         m_PreviousPlatform = m_FirstPlatform;
-        //Debug.Log(m_LeftX);
-        //Debug.Log(m_RightX);
 
         for (int i = 0; i < m_Platform.Length; i++)
         {

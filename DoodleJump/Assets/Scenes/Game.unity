@@ -1289,7 +1289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BounceForce: 10
   m_Type: 4
-  m_JetPackLifeTime: 0
+  m_JetPackLifeTime: 4
 --- !u!50 &1601715107
 Rigidbody2D:
   serializedVersion: 4
