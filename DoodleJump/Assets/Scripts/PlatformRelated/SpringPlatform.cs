@@ -9,9 +9,9 @@ public class SpringPlatform : Platform
         m_Animator = GetComponent<Animator>();
     }
 
-    public override int OnStep()
+    public override int OnStep(GameObject player)
     {
         m_Animator.SetTrigger("onStep");
-        return base.OnStep();
+        return base.OnStep(player);
     }
 }

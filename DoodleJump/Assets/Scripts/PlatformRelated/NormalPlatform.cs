@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NormalPlatform : Platform
 {
-    public override int OnStep()
+    public override int OnStep(GameObject player)
     {
-        return base.OnStep();
+        return base.OnStep(player);
     }
 }

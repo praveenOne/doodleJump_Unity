@@ -1,11 +1,12 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 public class RottedPlatform : Platform
 {
-    public override int OnStep()
+    public override int OnStep(GameObject player)
     {
         StartCoroutine(DestroyPlatform());
-        return base.OnStep();
+        return base.OnStep(player);
     }
 
     IEnumerator DestroyPlatform()

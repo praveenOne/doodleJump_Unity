@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "platform")
         {
             m_Rigitbody.velocity = Vector2.zero;
-            int forceVal = collision.gameObject.GetComponent<Platform>().OnStep();
+            int forceVal = collision.gameObject.GetComponent<Platform>().OnStep(gameObject);
             m_Rigitbody.AddForce(Vector2.up * forceVal, ForceMode2D.Impulse);
         }
         
