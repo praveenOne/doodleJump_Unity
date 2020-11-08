@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         m_RightX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
 
         m_DeadY = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y;
-        m_Height = gameObject.transform.localScale.y / gameObject.GetComponent<SpriteRenderer>().bounds.size.y;
+        m_Height = gameObject.GetComponent<SpriteRenderer>().bounds.size.y;
 
         m_IsPlayerDied = false;
     }
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         var axis = Input.GetAxis("Horizontal");
         m_Rigitbody.velocity = new Vector2(axis * 10, m_Rigitbody.velocity.y);
 
-        if(Camera.main.WorldToScreenPoint(gameObject.transform.position).y <  m_Height)
+        if(Camera.main.WorldToScreenPoint(gameObject.transform.position).y < - 200)
         {
             m_IsPlayerDied = true;
             GameManager.Instance.OnPlayerDie();

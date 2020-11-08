@@ -82,7 +82,10 @@ public class HUD : MonoBehaviour
         {
             timer += Time.deltaTime;
             float scale = Mathf.Lerp(1, 0.75f, Mathf.PingPong(timer, duration) / duration);
-            rectTransform.localScale = new Vector2(scale, scale);
+            if (rectTransform != null)
+            {
+                rectTransform.localScale = new Vector2(scale, scale);
+            }
             yield return null;
         }
     }

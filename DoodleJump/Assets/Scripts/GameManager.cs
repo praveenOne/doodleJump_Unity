@@ -30,23 +30,25 @@ public class GameManager : MonoBehaviour
     #endregion
 
     [SerializeField] GameObject m_PlayerPrefab;
+    [SerializeField] int[] m_LifeCost;
 
     int m_Lives;
     int m_Coins;
     int m_HighScore;
     int m_Score;
-    int m_LifeCost;
     Player m_Player;
 
     private void Awake()
     {
-        if (m_Instance != null && m_Instance != this)
+        if (m_Instance != null)
         {
-            Destroy(gameObject);
+            DestroyImmediate(gameObject);
         }
-
-        m_Instance = this;
-        DontDestroyOnLoad(gameObject);
+        else
+        {
+            m_Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -88,9 +90,16 @@ public class GameManager : MonoBehaviour
         m_HighScore = PlayerPrefs.GetInt(SaveKeys.highScore.ToString(), 0);
         m_Lives = PlayerPrefs.GetInt(SaveKeys.lives.ToString(), 0);
 
-        m_LifeCost = 4;
-        m_Lives = 3;
-        m_HighScore = 2;
+        //m_Lives = 1;
+        //m_HighScore = 2;
+        //m_Coins = 100;
+    }
+
+    void SaveData()
+    {
+        PlayerPrefs.SetInt(SaveKeys.coins.ToString(), m_Coins);
+        PlayerPrefs.SetInt(SaveKeys.highScore.ToString(), m_HighScore);
+        PlayerPrefs.SetInt(SaveKeys.lives.ToString(), m_Lives);
     }
 
     public void StartGame()
@@ -106,18 +115,20 @@ public class GameManager : MonoBehaviour
         if (m_Lives > 2)
             return;
 
-        if(m_Coins >= m_LifeCost)
+        if(m_Coins >= m_LifeCost[m_Lives])
         {
+            m_Coins -= m_LifeCost[m_Lives];
             m_Lives++;
-            m_Coins -= m_LifeCost;
             callback.Invoke();
         }
+        SaveData();
     }
 
     private void SpendLife()
     {
         m_Lives -= 1;
         HUD.Instance.SetLifeCount(m_Lives);
+        SaveData();
     }
 
     public void OnPlayerDie()
@@ -133,14 +144,20 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    ChangeScene(GameScenes.Menu);
+                    GameOver();
                 }
             });
         }
         else
         {
-            ChangeScene(GameScenes.Menu);
+            GameOver();
         }
+    }
+
+    private void GameOver()
+    {
+        SaveData();
+        ChangeScene(GameScenes.Menu);
     }
 
     public int GetLifeCount()
@@ -151,6 +168,22 @@ public class GameManager : MonoBehaviour
     public int GetCoinCount()
     {
         return m_Coins;
+    }
+
+    public bool CanPurchaseLifes()
+    {
+        if (m_Lives > 2)
+            return false;
+
+        return m_Coins > m_LifeCost[m_Lives];
+    }
+
+    public int GetPurchaseCost()
+    {
+        if (m_Lives > 2)
+            return -1;
+
+        return m_LifeCost[m_Lives];
     }
 
     public void OnStepPlatform()

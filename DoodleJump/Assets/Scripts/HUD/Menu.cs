@@ -9,6 +9,7 @@ public class Menu : MonoBehaviour
     [SerializeField] GameObject m_LifeBuyBtn;
     [SerializeField] Text m_HighScore;
     [SerializeField] Text m_Coins;
+    [SerializeField] Text m_LifeBuyBtnTxt;
 
     private void Start()
     {
@@ -24,11 +25,16 @@ public class Menu : MonoBehaviour
     void PaintMenu()
     {
         int lives = GameManager.Instance.GetLifeCount();
+        Debug.Log(lives);
         m_lifeMeeter.SetCount(lives);
 
-        if (lives > 2)
+        if (!GameManager.Instance.CanPurchaseLifes())
         {
             m_LifeBuyBtn.SetActive(false);
+        }
+        else
+        {
+            m_LifeBuyBtnTxt.text = "Buy Life For " + GameManager.Instance.GetPurchaseCost() + " Coins";
         }
 
         m_Coins.text = GameManager.Instance.GetCoinCount().ToString();
