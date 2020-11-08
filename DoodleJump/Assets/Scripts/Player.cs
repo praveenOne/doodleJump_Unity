@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         m_RightX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
 
         m_DeadY = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y;
-        m_Height = gameObject.GetComponent<SpriteRenderer>().bounds.size.y;
+        m_Height = gameObject.transform.localScale.y / gameObject.GetComponent<SpriteRenderer>().bounds.size.y;
 
         m_IsPlayerDied = false;
     }
@@ -30,10 +30,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var axis = Input.GetAxis("Horizontal");
-        m_Rigitbody.velocity = new Vector2(axis * 10, m_Rigitbody.velocity.y);
 
-        if(m_Rigitbody.velocity.y > 0)
+        if (m_Rigitbody.velocity.y > 0)
         {
             m_BoxCollider.enabled = false;
         }
@@ -42,15 +40,18 @@ public class Player : MonoBehaviour
             m_BoxCollider.enabled = true;
         }
 
-        if(Camera.main.WorldToScreenPoint(gameObject.transform.position).y < - m_Height)
+        if (m_IsPlayerDied)
+            return;
+
+        var axis = Input.GetAxis("Horizontal");
+        m_Rigitbody.velocity = new Vector2(axis * 10, m_Rigitbody.velocity.y);
+
+        if(Camera.main.WorldToScreenPoint(gameObject.transform.position).y <  m_Height)
         {
-            if (!m_IsPlayerDied)
-            {
-                m_IsPlayerDied = true;
-                GameManager.Instance.OnPlayerDie();
-                m_Rigitbody.bodyType = RigidbodyType2D.Static;
-            }
-            
+            m_IsPlayerDied = true;
+            GameManager.Instance.OnPlayerDie();
+            m_Rigitbody.bodyType = RigidbodyType2D.Static;
+
         }
     }
 
