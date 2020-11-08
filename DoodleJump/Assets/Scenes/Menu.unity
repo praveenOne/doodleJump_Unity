@@ -235,6 +235,7 @@ MonoBehaviour:
   m_LifeBuyBtn: {fileID: 1325004146}
   m_HighScore: {fileID: 1088603344}
   m_Coins: {fileID: 255976806}
+  m_LifeBuyBtnTxt: {fileID: 614223361}
 --- !u!4 &288253717
 Transform:
   m_ObjectHideFlags: 0
