@@ -9,8 +9,9 @@ public class MovingPlatform : Platform
     float m_ValB;
 
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         SpriteRenderer spriteR = GetComponent<SpriteRenderer>();
         float posX = transform.position.x;
         m_ValA = posX - spriteR.size.x/2;

@@ -85,6 +85,12 @@ public class GameManager : MonoBehaviour
         return m_Coins;
     }
 
+    public void OnStepPlatform()
+    {
+        m_Score += 1;
+        HUD.Instance.SetScore(m_Score);
+    }
+
     //public Transform GetPlayerTransform()
     //{
     //    return m_Player.transform;

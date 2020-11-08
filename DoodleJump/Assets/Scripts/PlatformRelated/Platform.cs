@@ -16,8 +16,20 @@ public class Platform : MonoBehaviour
     public int m_BounceForce;
     public PlatformType m_Type;
 
+    bool m_IsSteped;
+
+    public virtual void Start()
+    {
+        m_IsSteped = false;
+    }
+
     public virtual int OnStep(GameObject player)
     {
+        if (!m_IsSteped)
+        {
+            m_IsSteped = true;
+            GameManager.Instance.OnStepPlatform();
+        }
         return m_BounceForce;
     }
 

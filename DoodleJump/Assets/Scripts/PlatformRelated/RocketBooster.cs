@@ -8,8 +8,9 @@ public class RocketBooster : Platform
     [SerializeField] float m_JetPackLifeTime;
 
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         m_JetPack = transform.GetChild(0).gameObject;
     }
 

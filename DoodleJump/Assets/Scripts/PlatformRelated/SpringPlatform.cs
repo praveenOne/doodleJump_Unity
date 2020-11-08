@@ -4,8 +4,9 @@ public class SpringPlatform : Platform
 {
     Animator m_Animator;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         m_Animator = GetComponent<Animator>();
     }
 
