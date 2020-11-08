@@ -60,6 +60,10 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         m_Score = 0;
+        HUD.Instance.StartCountdown(() =>
+        {
+            Debug.Log("Countdown Finished");
+        });
     }
 
     public void PurchaseLifes(System.Action callback)
@@ -91,8 +95,4 @@ public class GameManager : MonoBehaviour
         HUD.Instance.SetScore(m_Score);
     }
 
-    //public Transform GetPlayerTransform()
-    //{
-    //    return m_Player.transform;
-    //}
 }

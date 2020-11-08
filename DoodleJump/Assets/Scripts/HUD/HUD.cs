@@ -16,6 +16,7 @@ public class HUD : MonoBehaviour
     [SerializeField] Text m_Coins;
     [SerializeField] Text m_Score;
     [SerializeField] GameObject m_HighScore;
+    [SerializeField] CountdownAnimation m_Countdown;
 
     private void Awake()
     {
@@ -51,4 +52,10 @@ public class HUD : MonoBehaviour
     {
         m_Score.text = score.ToString();
     }
+
+    public void StartCountdown(System.Action callback)
+    {
+        m_Countdown.StartCountdown(callback);
+    }
+   
 }
