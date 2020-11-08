@@ -12,10 +12,9 @@ public class PlatformManager : MonoBehaviour
 {
 
     [SerializeField] GameObject[] m_Platform;
-    [SerializeField] Transform m_FirstPlatform;
+
     float m_RightX;
     float m_LeftX;
-    bool IsCreatingPlatform;
     Camera m_Camera;
     ObjectPool[] m_PlatformPool;
     Transform m_PreviousPlatform;
@@ -41,14 +40,18 @@ public class PlatformManager : MonoBehaviour
         m_RightX = m_Camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
 
         m_PlatformPool = new ObjectPool[m_Platform.Length];
-        m_PreviousPlatform = m_FirstPlatform;
 
         for (int i = 0; i < m_Platform.Length; i++)
         {
             m_PlatformPool[i] = new ObjectPool(m_Platform[i], 20, true);
         }
-        
-        CreatePlatforms();
+
+        GameObject firstPt = m_PlatformPool[0].Spawn();
+        m_PreviousPlatform = firstPt.transform;
+        for (int i = 0; i < 50; i++)
+        {
+            CreatePlatforms();
+        }
     }
 
     public float GetLeftBoundry()
@@ -63,18 +66,10 @@ public class PlatformManager : MonoBehaviour
 
     void CreatePlatforms()
     {
-        if (IsCreatingPlatform)
-            return;
-
-        IsCreatingPlatform = true;
-        for (int i = 0; i < 100; i++)
-        {
-            GameObject go = m_PlatformPool[(int)Random.Range(0, m_Platform.Length)].Spawn();
-            go.transform.parent = this.transform;
-            go.transform.position = GetNextPlatformPos(m_PreviousPlatform,go.transform);
-            m_PreviousPlatform = go.transform;
-        }
-        IsCreatingPlatform = false;
+        GameObject go = m_PlatformPool[Random.Range(0, m_Platform.Length)].Spawn();
+        go.transform.parent = this.transform;
+        go.transform.position = GetNextPlatformPos(m_PreviousPlatform, go.transform);
+        m_PreviousPlatform = go.transform;
     }
 
     public bool IsPlatformDissapear(Transform platrom)
@@ -124,13 +119,6 @@ public class PlatformManager : MonoBehaviour
     public void DestroyPlatform(PlatformType type, GameObject platrom)
     {
         m_PlatformPool[(int)type].Recycle(platrom);
-    }
-
-    private void Update()
-    {
-        if(m_Camera.WorldToScreenPoint(m_PreviousPlatform.position).y < Screen.height + 200)
-        {
-            CreatePlatforms();
-        }
+        CreatePlatforms();
     }
 }

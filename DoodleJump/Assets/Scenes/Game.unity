@@ -2222,11 +2222,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517683410}
   m_CullTransparentMesh: 0
---- !u!4 &2056210038 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1651187604085667085, guid: efdc7a34f7d1d42b18b525a77a6d7a28, type: 3}
-  m_PrefabInstance: {fileID: 1651187604999287675}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2131704321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,7 +2257,6 @@ MonoBehaviour:
   - {fileID: 1184001912895488413, guid: bf1b20b58fe8a46b484f3ca5aea757e6, type: 3}
   - {fileID: 1877101005109361704, guid: 67045a16e64fd4b9dab66315acfe9f2e, type: 3}
   - {fileID: 4090348971469235164, guid: 35a1f68cd9e7445bbba774f1db785413, type: 3}
-  m_FirstPlatform: {fileID: 2056210038}
 --- !u!4 &2131704323
 Transform:
   m_ObjectHideFlags: 0
@@ -2483,7 +2477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1651187604085667081, guid: efdc7a34f7d1d42b18b525a77a6d7a28, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1651187604085667085, guid: efdc7a34f7d1d42b18b525a77a6d7a28, type: 3}
       propertyPath: m_LocalPosition.x
