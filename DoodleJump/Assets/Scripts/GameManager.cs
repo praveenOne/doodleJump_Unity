@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
 
         m_LifeCost = 4;
         m_Lives = 3;
+        m_HighScore = 2;
     }
 
     public void StartGame()
@@ -123,7 +124,7 @@ public class GameManager : MonoBehaviour
     {
         if(m_Lives > 0)
         {
-            HUD.Instance.PopupMessage("You Died", "Use 1 Heart And Retry", (bool feedback) =>
+            HUD.Instance.PopupMessage("You Died", "Use 1 Heart And Retry!", (bool feedback) =>
             {
                 if (feedback)
                 {
@@ -156,6 +157,10 @@ public class GameManager : MonoBehaviour
     {
         m_Score += 1;
         HUD.Instance.SetScore(m_Score);
+        if(m_Score > m_HighScore)
+        {
+            StartCoroutine(HUD.Instance.DisplayHighScore());
+        }
     }
 
     public void ChangeScene(GameScenes scene)

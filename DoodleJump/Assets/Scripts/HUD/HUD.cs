@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System.Collections;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -70,5 +71,19 @@ public class HUD : MonoBehaviour
     {
         m_Popup.Show(title, message, callback);
     }
-   
+
+    public IEnumerator DisplayHighScore()
+    {
+        float timer = 0;
+        float duration = 0.3f;
+        m_HighScore.SetActive(true);
+        RectTransform rectTransform = m_HighScore.GetComponent<RectTransform>();
+        while (true)
+        {
+            timer += Time.deltaTime;
+            float scale = Mathf.Lerp(1, 0.75f, Mathf.PingPong(timer, duration) / duration);
+            rectTransform.localScale = new Vector2(scale, scale);
+            yield return null;
+        }
+    }
 }
