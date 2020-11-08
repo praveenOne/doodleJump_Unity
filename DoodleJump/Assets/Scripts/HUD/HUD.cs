@@ -19,6 +19,7 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject m_HighScore;
     [SerializeField] CountdownAnimation m_Countdown;
     [SerializeField] CinemachineVirtualCamera m_CinemachineCam;
+    [SerializeField] Popup m_Popup;
 
     private void Awake()
     {
@@ -63,6 +64,11 @@ public class HUD : MonoBehaviour
     public void SetCamTarget(Transform player)
     {
         m_CinemachineCam.Follow = player;
+    }
+
+    public void PopupMessage(string title, string message, System.Action<bool> callback)
+    {
+        m_Popup.Show(title, message, callback);
     }
    
 }

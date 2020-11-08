@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     float m_RightX;
     float m_DeadY;
     float m_Height;
+    bool m_IsPlayerDied;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
 
         m_DeadY = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y;
         m_Height = gameObject.GetComponent<SpriteRenderer>().bounds.size.y;
+
+        m_IsPlayerDied = false;
     }
 
     // Update is called once per frame
@@ -41,7 +44,13 @@ public class Player : MonoBehaviour
 
         if(Camera.main.WorldToScreenPoint(gameObject.transform.position).y < - m_Height)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+            if (!m_IsPlayerDied)
+            {
+                m_IsPlayerDied = true;
+                GameManager.Instance.OnPlayerDie();
+                m_Rigitbody.bodyType = RigidbodyType2D.Static;
+            }
+            
         }
     }
 
@@ -67,5 +76,14 @@ public class Player : MonoBehaviour
             m_Rigitbody.AddForce(Vector2.up * forceVal, ForceMode2D.Impulse);
         }
         
+    }
+
+
+    public IEnumerator ActivateShield()
+    {
+        m_Rigitbody.bodyType = RigidbodyType2D.Dynamic;
+        m_Rigitbody.AddForce(Vector2.up * 30, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(3f);
+        m_IsPlayerDied = false;
     }
 }

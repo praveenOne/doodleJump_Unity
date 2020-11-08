@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
         m_Lives = PlayerPrefs.GetInt(SaveKeys.lives.ToString(), 0);
 
         m_LifeCost = 4;
+        m_Lives = 3;
     }
 
     public void StartGame()
@@ -109,6 +110,35 @@ public class GameManager : MonoBehaviour
             m_Lives++;
             m_Coins -= m_LifeCost;
             callback.Invoke();
+        }
+    }
+
+    private void SpendLife()
+    {
+        m_Lives -= 1;
+        HUD.Instance.SetLifeCount(m_Lives);
+    }
+
+    public void OnPlayerDie()
+    {
+        if(m_Lives > 0)
+        {
+            HUD.Instance.PopupMessage("You Died", "Use 1 Heart And Retry", (bool feedback) =>
+            {
+                if (feedback)
+                {
+                    SpendLife();
+                    StartCoroutine(m_Player.ActivateShield());
+                }
+                else
+                {
+                    ChangeScene(GameScenes.Menu);
+                }
+            });
+        }
+        else
+        {
+            ChangeScene(GameScenes.Menu);
         }
     }
 
