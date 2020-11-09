@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4090348971469235161}
   - component: {fileID: 4090348971469235166}
   - component: {fileID: 4090348971469235167}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RocketBooster
   m_TagString: platform
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 4090348972290629341}
   - component: {fileID: 4090348972290629340}
   - component: {fileID: 4090348972290629343}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: JetPack
   m_TagString: platform
   m_Icon: {fileID: 0}

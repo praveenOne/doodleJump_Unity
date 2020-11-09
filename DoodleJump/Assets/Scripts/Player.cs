@@ -12,6 +12,14 @@ public class Player : MonoBehaviour
     float m_DeadY;
     float m_Height;
     bool m_IsPlayerDied;
+
+    // RayCast related
+    private Bounds m_PlayerBounds;
+    private float m_RayGap;
+    private int m_RayCount = 4;
+
+    private LayerMask m_LayerMask;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +31,10 @@ public class Player : MonoBehaviour
 
         m_DeadY = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y;
         m_Height = gameObject.GetComponent<SpriteRenderer>().bounds.size.y;
+
+        m_LayerMask = LayerMask.GetMask("platform");
+        m_PlayerBounds = gameObject.GetComponent<Renderer>().bounds;
+        m_RayGap = m_PlayerBounds.size.x / m_RayCount;
 
         m_IsPlayerDied = false;
     }
@@ -66,17 +78,33 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(m_LeftX, transform.position.y, transform.position.z);
         }
+
+        CheckRayCollusions();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "platform")
-        {
-            m_Rigitbody.velocity = Vector2.zero;
-            int forceVal = collision.gameObject.GetComponent<Platform>().OnStep(gameObject);
-            m_Rigitbody.AddForce(Vector2.up * forceVal, ForceMode2D.Impulse);
-        }
 
+    void CheckRayCollusions()
+    {
+        for (int i = 0; i < m_RayCount; i++)
+        {
+            var rayPosition = new Vector2(gameObject.transform.position.x - m_PlayerBounds.extents.x + m_RayGap * i,
+                    gameObject.transform.position.y - m_PlayerBounds.extents.y);
+
+            Ray2D ray = new Ray2D(rayPosition, Vector2.down);
+            RaycastHit2D[]  hits = Physics2D.RaycastAll(ray.origin,ray.direction, 0.05f, m_LayerMask);
+
+            foreach (var hit in hits)
+            {
+                Debug.Log(hit.transform.gameObject.name);
+                if (hit.transform.CompareTag("platform"))
+                {
+                    m_Rigitbody.velocity = Vector2.zero;
+                    int forceVal = hit.transform.gameObject.GetComponent<Platform>().OnStep(gameObject);
+                    m_Rigitbody.AddForce(Vector2.up * forceVal, ForceMode2D.Impulse);
+                }
+
+            }
+        }
     }
 
 

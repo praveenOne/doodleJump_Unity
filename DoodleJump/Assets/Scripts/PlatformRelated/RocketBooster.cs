@@ -37,7 +37,7 @@ public class RocketBooster : Platform
             normalizedTime += Time.deltaTime / m_JetPackLifeTime;
 
             yield return null;
-            player.transform.Translate(Vector3.up);
+            player.transform.Translate(Vector3.up*0.4f);
             m_JetPack.transform.localPosition = new Vector3(0, 0, -0.5f);
         }
 
