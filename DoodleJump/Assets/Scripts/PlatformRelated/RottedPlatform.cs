@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class RottedPlatform : Platform
+namespace praveen.one
 {
-    public override int OnStep(GameObject player)
+    public class RottedPlatform : Platform
     {
-        StartCoroutine(DestroyPlatform());
-        return base.OnStep(player);
-    }
+        public override int OnStep(GameObject player)
+        {
+            StartCoroutine(DestroyPlatform());
+            return base.OnStep(player);
+        }
 
-    IEnumerator DestroyPlatform()
-    {
-        yield return null;
-        Recycle();
+        IEnumerator DestroyPlatform()
+        {
+            yield return null;
+            Recycle();
+        }
     }
 }

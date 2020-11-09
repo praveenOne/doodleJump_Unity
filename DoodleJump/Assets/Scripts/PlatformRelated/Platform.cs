@@ -1,48 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public enum PlatformType
+namespace praveen.one
 {
-    normal  = 0,
-    rotted  = 1,
-    spring  = 2,
-    moving  = 3,
-    jetPack = 4
-}
-
-public class Platform : MonoBehaviour
-{
-    public int m_BounceForce;
-    public PlatformType m_Type;
-
-    bool m_IsSteped;
-
-    public virtual void Start()
+    public enum PlatformType
     {
-        m_IsSteped = false;
+        normal = 0,
+        rotted = 1,
+        spring = 2,
+        moving = 3,
+        jetPack = 4
     }
 
-    public virtual int OnStep(GameObject player)
+    public class Platform : MonoBehaviour
     {
-        if (!m_IsSteped)
+        #region public_variables
+        public int m_BounceForce;
+        public PlatformType m_Type;
+        #endregion
+
+        #region member_variables
+        bool m_IsSteped;
+        #endregion
+
+        public virtual void Start()
         {
-            m_IsSteped = true;
-            GameManager.Instance.OnStepPlatform();
+            m_IsSteped = false;
         }
-        return m_BounceForce;
-    }
 
-    public virtual void Update()
-    {
-        if (PlatformManager.Instance.IsPlatformDissapear(gameObject.transform))
+        public virtual int OnStep(GameObject player)
         {
-            Recycle();
+            if (!m_IsSteped)
+            {
+                m_IsSteped = true;
+                GameManager.Instance.OnStepPlatform();
+            }
+            return m_BounceForce;
         }
-    }
 
-    public void Recycle()
-    {
-        PlatformManager.Instance.DestroyPlatform(m_Type, gameObject);
+        public virtual void Update()
+        {
+            if (PlatformManager.Instance.IsPlatformDissapear(gameObject.transform))
+            {
+                Recycle();
+            }
+        }
+
+        public void Recycle()
+        {
+            PlatformManager.Instance.DestroyPlatform(m_Type, gameObject);
+        }
     }
 }

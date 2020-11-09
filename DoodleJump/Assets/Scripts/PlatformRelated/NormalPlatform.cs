@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class NormalPlatform : Platform
+namespace praveen.one
 {
-    public override int OnStep(GameObject player)
+    public class NormalPlatform : Platform
     {
-        return base.OnStep(player);
+        public override int OnStep(GameObject player)
+        {
+            return base.OnStep(player);
+        }
     }
 }

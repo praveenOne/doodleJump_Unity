@@ -1,21 +1,26 @@
 ﻿using UnityEngine;
 
-public class CountdownAnimation : MonoBehaviour
+namespace praveen.one
 {
-    System.Action m_Callback;
-    [SerializeField] Animator m_Animator;
-
-    public void StartCountdown(System.Action callback)
+    public class CountdownAnimation : MonoBehaviour
     {
-        m_Animator.SetTrigger("OnStart");
-        m_Callback = callback;
-    }
+        #region member_variables
+        System.Action m_Callback;
+        [SerializeField] Animator m_Animator;
+        #endregion
 
-    public void OnFinishCountdown()
-    {
-        if (m_Callback != null)
+        public void StartCountdown(System.Action callback)
         {
-            m_Callback.Invoke();
+            m_Animator.SetTrigger("OnStart");
+            m_Callback = callback;
+        }
+
+        public void OnFinishCountdown()
+        {
+            if (m_Callback != null)
+            {
+                m_Callback.Invoke();
+            }
         }
     }
 }

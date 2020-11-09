@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 
-public class SpringPlatform : Platform
+namespace praveen.one
 {
-    Animator m_Animator;
-
-    public override void Start()
+    public class SpringPlatform : Platform
     {
-        base.Start();
-        m_Animator = GetComponent<Animator>();
-    }
+        #region member_variables
+        Animator m_Animator;
+        #endregion
 
-    public override int OnStep(GameObject player)
-    {
-        m_Animator.SetTrigger("onStep");
-        return base.OnStep(player);
+        public override void Start()
+        {
+            base.Start();
+            m_Animator = GetComponent<Animator>();
+        }
+
+        public override int OnStep(GameObject player)
+        {
+            m_Animator.SetTrigger("onStep");
+            return base.OnStep(player);
+        }
     }
 }

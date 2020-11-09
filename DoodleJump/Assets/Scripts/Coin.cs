@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 
-public class Coin : MonoBehaviour
+namespace praveen.one
 {
-    void Update()
+    public class Coin : MonoBehaviour
     {
-        if (CoinManager.Instance.IsCoinDissapear(gameObject.transform))
+        void Update()
         {
-            CoinManager.Instance.RecycleCoin(gameObject);
+            if (CoinManager.Instance.IsCoinDissapear(gameObject.transform))
+            {
+                CoinManager.Instance.RecycleCoin(gameObject);
+            }
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            GameManager.Instance.GetCoin();
-            CoinManager.Instance.RecycleCoin(gameObject);
+            if (collision.gameObject.tag == "Player")
+            {
+                GameManager.Instance.GetCoin();
+                CoinManager.Instance.RecycleCoin(gameObject);
+            }
         }
     }
 }

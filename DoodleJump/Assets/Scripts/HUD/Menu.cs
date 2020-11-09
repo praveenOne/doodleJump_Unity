@@ -1,46 +1,49 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Menu : MonoBehaviour
+namespace praveen.one
 {
-    [SerializeField] LifeMeeter m_lifeMeeter;
-    [SerializeField] GameObject m_LifeBuyBtn;
-    [SerializeField] Text m_HighScore;
-    [SerializeField] Text m_Coins;
-    [SerializeField] Text m_LifeBuyBtnTxt;
-
-    private void Start()
+    public class Menu : MonoBehaviour
     {
-        PaintMenu();
-    }
+        #region member_variables
+        [SerializeField] LifeMeeter m_lifeMeeter;
+        [SerializeField] GameObject m_LifeBuyBtn;
+        [SerializeField] Text m_HighScore;
+        [SerializeField] Text m_Coins;
+        [SerializeField] Text m_LifeBuyBtnTxt;
+        #endregion
 
-    public void OnClickLifeBuy()
-    {
-        GameManager.Instance.PurchaseLifes(PaintMenu);
-    }
-
-
-    void PaintMenu()
-    {
-        m_HighScore.text = GameManager.Instance.GetHighScore().ToString();
-        m_lifeMeeter.SetCount(GameManager.Instance.GetLifeCount());
-
-        if (!GameManager.Instance.CanPurchaseLifes())
+        private void Start()
         {
-            m_LifeBuyBtn.SetActive(false);
-        }
-        else
-        {
-            m_LifeBuyBtnTxt.text = "Buy Life For " + GameManager.Instance.GetPurchaseCost() + " Coins";
+            PaintMenu();
         }
 
-        m_Coins.text = GameManager.Instance.GetCoinCount().ToString();
-    }
+        public void OnClickLifeBuy()
+        {
+            GameManager.Instance.PurchaseLifes(PaintMenu);
+        }
 
-    public void OnClickPlayButton()
-    {
-        GameManager.Instance.ChangeScene(GameScenes.Game);
+
+        void PaintMenu()
+        {
+            m_HighScore.text = GameManager.Instance.GetHighScore().ToString();
+            m_lifeMeeter.SetCount(GameManager.Instance.GetLifeCount());
+
+            if (!GameManager.Instance.CanPurchaseLifes())
+            {
+                m_LifeBuyBtn.SetActive(false);
+            }
+            else
+            {
+                m_LifeBuyBtnTxt.text = "Buy Life For " + GameManager.Instance.GetPurchaseCost() + " Coins";
+            }
+
+            m_Coins.text = GameManager.Instance.GetCoinCount().ToString();
+        }
+
+        public void OnClickPlayButton()
+        {
+            GameManager.Instance.ChangeScene(GameScenes.Game);
+        }
     }
 }

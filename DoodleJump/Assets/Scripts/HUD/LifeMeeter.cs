@@ -1,21 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class LifeMeeter : MonoBehaviour
+namespace praveen.one
 {
-    [SerializeField] Image[] m_LifeList;
-
-
-    public void SetCount(int count)
+    public class LifeMeeter : MonoBehaviour
     {
-        for (int i = 0; i < m_LifeList.Length; i++)
+        #region member_variables
+        [SerializeField] Image[] m_LifeList;
+        #endregion
+
+
+        public void SetCount(int count)
         {
-            m_LifeList[i].color = Color.white;
-        }
-        
-        for (int i = 0; i < count; i++)
-        {
-            m_LifeList[i].color = Color.red;
+            for (int i = 0; i < m_LifeList.Length; i++)
+            {
+                m_LifeList[i].color = Color.white;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                m_LifeList[i].color = Color.red;
+            }
         }
     }
 }
