@@ -96,8 +96,8 @@ namespace praveen.one
                 {
                     if (hit.transform.CompareTag("platform"))
                     {
-                        m_Rigitbody.velocity = Vector2.zero;
                         int forceVal = hit.transform.gameObject.GetComponent<Platform>().OnStep(gameObject);
+                        m_Rigitbody.velocity = Vector2.zero;
                         m_Rigitbody.AddForce(Vector2.up * forceVal, ForceMode2D.Impulse);
                     }
 
