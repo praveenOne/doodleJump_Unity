@@ -22,7 +22,6 @@ namespace praveen.one
         private LayerMask m_LayerMask;
         #endregion
 
-        // Start is called before the first frame update
         void Start()
         {
             m_Rigitbody = GetComponent<Rigidbody2D>();
@@ -38,18 +37,9 @@ namespace praveen.one
             m_IsPlayerDied = false;
         }
 
-        // Update is called once per frame
         void Update()
         {
-
-            if (m_Rigitbody.velocity.y > 0)
-            {
-                m_BoxCollider.enabled = false;
-            }
-            else
-            {
-                m_BoxCollider.enabled = true;
-            }
+            m_BoxCollider.enabled = !(m_Rigitbody.velocity.y > 0);
 
             if (m_IsPlayerDied)
                 return;
@@ -69,13 +59,15 @@ namespace praveen.one
 
         private void FixedUpdate()
         {
-            if (transform.position.x < m_LeftX)
+            Vector3 pos = transform.position;
+
+            if (pos.x < m_LeftX)
             {
-                transform.position = new Vector3(m_RightX, transform.position.y, transform.position.z);
+                transform.position = new Vector3(m_RightX, pos.y, pos.z);
             }
             if (transform.position.x > m_RightX)
             {
-                transform.position = new Vector3(m_LeftX, transform.position.y, transform.position.z);
+                transform.position = new Vector3(m_LeftX, pos.y, pos.z);
             }
 
             CheckRayCollusions();
