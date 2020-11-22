@@ -14,10 +14,11 @@ namespace praveen.one
         float m_RightX;
         bool m_IsPlayerDied;
 
-        // RayCast related
+        #region raycast_related
         private Bounds m_PlayerBounds;
         private float m_RayGap;
         private int m_RayCount = 4;
+        #endregion
 
         private LayerMask m_LayerMask;
         #endregion
@@ -78,8 +79,9 @@ namespace praveen.one
         {
             for (int i = 0; i < m_RayCount; i++)
             {
-                var rayPosition = new Vector2(gameObject.transform.position.x - m_PlayerBounds.extents.x + m_RayGap * i,
-                        gameObject.transform.position.y - m_PlayerBounds.extents.y);
+                Vector3 pos = transform.position;
+                var rayPosition = new Vector2(pos.x - m_PlayerBounds.extents.x + m_RayGap * i,
+                        pos.y - m_PlayerBounds.extents.y);
 
                 Ray2D ray = new Ray2D(rayPosition, Vector2.down);
                 RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, 0.05f, m_LayerMask);
